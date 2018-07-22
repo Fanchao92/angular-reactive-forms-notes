@@ -1,0 +1,15 @@
+Useful Resources:
+https://www.concretepage.com/angular-2/angular-2-formgroup-example
+https://angular.io/guide/reactive-forms#grouping-form-controls
+https://angular.io/api/forms/FormGroup
+https://angular.io/api/forms/FormControl
+
+FormGroup and FormControl are the 2 classes for model-driven forms.
+These 2 classes contain the info about user input such as pristine/dirty, valid/error, touched/untouched.
+
+Formcontrol tracks an individual user input element (text, radio button, select).
+Formgroup tracks the state of a group of input elements as a whole. Formgroups can be nested.
+
+In Reactive form design pattern, a form model is a data structure that respresents the HTML form. It tracks the user input values, as well as form state.
+We first need to create a form model in the component, and then bind form input elements to our form model.
+A form model needs at least one FormGroup. A FormControl is defined for each input element.
