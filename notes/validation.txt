@@ -1,0 +1,8 @@
+Validation:
+1. Set Validators
+To change validators in code: https://angular.io/api/forms/AbstractControl#setValidators
+After validators are changed, the forms are not evaluated against the latest validators.
+In order to re-validate the forms, we need to invoke updateValueAndValidity(): 
+https://angular.io/api/forms/AbstractControl#updateValueAndValidity
+
+2. 

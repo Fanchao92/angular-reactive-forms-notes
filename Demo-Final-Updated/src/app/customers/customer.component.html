@@ -4,11 +4,15 @@
     </div>
 
     <div class="panel-body">
+        <!-- NOTE: Bind a form to a FormGroup component variable -->
         <form class="form-horizontal"
               novalidate
               (ngSubmit)="save()"
               [formGroup]="customerForm">
             <fieldset>
+                <!-- NOTE: Use get() method of FormGroup to get a specific FormControl element
+                ngClass is used to add new classes to the HTML element. This is equivalent for:
+                [class.has-error]="customerForm.get('firstName').touched" -->
                 <div class="form-group"
                     [ngClass]="{'has-error': (customerForm.get('firstName').touched || 
                                               customerForm.get('firstName').dirty) &&
@@ -17,6 +21,7 @@
                            for="firstNameId">First Name</label>
 
                     <div class="col-md-8">
+                        <!-- NOTE: "formControlName" attribute refers to a FormControl element defined in the FormGroup in component-->
                         <input class="form-control" 
                                id="firstNameId" 
                                type="text" 
@@ -25,6 +30,7 @@
                         <span class="help-block" *ngIf="(customerForm.get('firstName').touched || 
                                                          customerForm.get('firstName').dirty) && 
                                                          customerForm.get('firstName').errors">
+                            <!-- NOTE: To get the validation errors of an FormControl element, refer to "errors" member variable -->
                             <span *ngIf="customerForm.get('firstName').errors.required">
                                 Please enter your first name.
                             </span>
@@ -60,6 +66,11 @@
                 <div formGroupName="emailGroup"
                      [ngClass]="{'has-error': customerForm.get('emailGroup').errors }">
                      
+                    <!-- NOTE:
+                     There are 2 ways to access the "email" or "confirmEmail" FormControls
+                     Method 1: customerForm.controls.emailGroup.controls.confirmEmail
+                     Method 2: customerForm.get('emailGroup.confirmEmail')
+                     -->
                     <div class="form-group"
                          [ngClass]="{'has-error': emailMessage}">
                         <label class="col-md-2 control-label" 
@@ -299,6 +310,7 @@
         </form>
     </div>
 </div>
+<!-- NOTE: A FormGroup has valid, touched, and dirty fields. For further info, refer to docs -->
 <br>Dirty: {{ customerForm.dirty }} 
 <br>Touched: {{ customerForm.touched }}
 <br>Valid: {{ customerForm.valid }}

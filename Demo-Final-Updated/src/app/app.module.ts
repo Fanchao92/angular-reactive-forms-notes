@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customers/customer.component';
 
+// NOTE: Any code using Angular reactive forms should import ReactiveFormsModule in the module file.
+
 @NgModule({
   imports: [
     BrowserModule,
