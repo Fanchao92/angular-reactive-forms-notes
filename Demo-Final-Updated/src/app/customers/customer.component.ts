@@ -102,6 +102,7 @@ export class CustomerComponent implements OnInit {
             sendCatalog: true,
             /* NOTE: FormArray
             https://angular.io/api/forms/FormArray
+            https://alligator.io/angular/reactive-forms-formarray-dynamic-fields/
             A FormArray aggregates the values of each child FormControl into an array. It calculates its status by reducing 
             the status values of its children. For example, if one of the controls in a FormArray is invalid, 
             the entire array becomes invalid. FormArray is one of the three fundamental building blocks used to define 
