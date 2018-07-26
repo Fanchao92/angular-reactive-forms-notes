@@ -30,7 +30,8 @@
                         <span class="help-block" *ngIf="(customerForm.get('firstName').touched || 
                                                          customerForm.get('firstName').dirty) && 
                                                          customerForm.get('firstName').errors">
-                            <!-- NOTE: To get the validation errors of an FormControl element, refer to "errors" member variable -->
+                            <!-- NOTE: To get the validation errors of an FormControl element, refer to "errors" member variable 
+                                This errors array is the returned key-value pairs of validators-->
                             <span *ngIf="customerForm.get('firstName').errors.required">
                                 Please enter your first name.
                             </span>
@@ -199,21 +200,25 @@
                     </div>
 
                     <div formArrayName="addresses" *ngFor="let address of addresses.controls; let i=index">
+                        <!-- NOTE: formGroupName of a FormArray should be the index of the current FormGroup -->
                         <div [formGroupName]="i">
                             <div class="form-group" >
-                                <label class="col-md-2 control-label"
-                                       attr.for="{{'addressType1Id' + i}}">Address Type</label>
+                                <label class="col-md-2 control-label">Address Type</label>
                                 <div class="col-md-8">
+                                    <!-- NOTE:
+                                        The formControlName in the component should be equal to the value attribute
+                                        of one of the radio inputs.
+                                     -->
                                     <label class="radio-inline">
-                                        <input type="radio" id="{{'addressType1Id' + i}}" value="home"
+                                        <input type="radio" value="home"
                                         formControlName="addressType">Home
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" id="{{'addressType1Id' + i}}" value="work"
+                                        <input type="radio" value="work"
                                         formControlName="addressType">Work
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" id="{{'addressType1Id' + i}}" value="other"
+                                        <input type="radio" value="other"
                                         formControlName="addressType">Other
                                     </label>
                                 </div>

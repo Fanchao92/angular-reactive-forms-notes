@@ -54,8 +54,11 @@ export class CustomerComponent implements OnInit {
     customer: Customer = new Customer();
     emailMessage: string;
 
+    /* NOTE: TypeScript setter and getter
+    https://stackoverflow.com/questions/45648714/how-to-access-getter-setter-accessors-from-angular-4-in-template-binding/45648955
+    */
     get addresses(): FormArray{
-        return <FormArray>this.customerForm.get('addresses');
+        return this.customerForm.get('addresses') as FormArray;
     }
 
     private validationMessages = {
@@ -76,7 +79,7 @@ export class CustomerComponent implements OnInit {
     /* NOTE: we can group several inputs into one logical FormGroup.
     For example, we need users to enter an email address and confirm it. We can define an "emailGroup" 
     FormGroup in our form model that contains an "email" FormControl and a "confirmEmail" FormControl. 
-    Then, in the template. We can define a "div" element that has formGroupName equal to emailGroup.
+    Then, in the template. We can define a "div" element that has formGroupName attribute equal to emailGroup.
     This div contains 2 inputs: One for the "email" FormControl and the other for "confirmEmail" FormControl.
     */
     ngOnInit(): void {
@@ -97,15 +100,24 @@ export class CustomerComponent implements OnInit {
             notification: 'email',
             rating: ['', ratingRange(1, 5)],
             sendCatalog: true,
+            /* NOTE: FormArray
+            https://angular.io/api/forms/FormArray
+            A FormArray aggregates the values of each child FormControl into an array. It calculates its status by reducing 
+            the status values of its children. For example, if one of the controls in a FormArray is invalid, 
+            the entire array becomes invalid. FormArray is one of the three fundamental building blocks used to define 
+            forms in Angular, along with FormControl and FormGroup.
+            */
             addresses: this.fb.array([this.buildAddress()])
         });
 
-        this.customerForm.get('notification').valueChanges
-                         .subscribe(value => this.setNotification(value));
+        /* NOTE:
+        We can subscribe to valueChanges observable of an AbstractControl and pass a callback method to be invoked
+        whenever values are changed.
+        */
+        this.customerForm.get('notification').valueChanges.subscribe(value => this.setNotification(value));
 
         const emailControl = this.customerForm.get('emailGroup.email');
-        emailControl.valueChanges.debounceTime(1000).subscribe(value =>
-            this.setMessage(emailControl));
+        emailControl.valueChanges.debounceTime(1000).subscribe(value => this.setMessage(emailControl));
     }
 
     addAddress(): void {
