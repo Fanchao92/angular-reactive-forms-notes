@@ -10,19 +10,17 @@ import { Customer } from './customer';
    https://angular.io/api/forms/FormGroup#setValue
    https://angular.io/api/forms/FormGroup#patchValue
 */
-
 function emailMatcher(c: AbstractControl): {[key: string]: boolean} | null {
     let emailControl = c.get('email');
     let confirmControl = c.get('confirmEmail');
 
     if (emailControl.pristine || confirmControl.pristine) {
-      return null;
-    }
-
-    if (emailControl.value === confirmControl.value) {
         return null;
+    } else if (emailControl.value === confirmControl.value) {
+        return null;
+    } else {
+        return { 'match': true };
     }
-    return { 'match': true };
  }
 
 /* NOTE:
@@ -52,7 +50,7 @@ function ratingRange(min: number, max: number): ValidatorFn {
 export class CustomerComponent implements OnInit {
     customerForm: FormGroup;
     customer: Customer = new Customer();
-    emailMessage: string;
+    emailErrorMessage: string;
 
     /* NOTE: TypeScript setter and getter
     https://stackoverflow.com/questions/45648714/how-to-access-getter-setter-accessors-from-angular-4-in-template-binding/45648955
@@ -118,7 +116,7 @@ export class CustomerComponent implements OnInit {
         this.customerForm.get('notification').valueChanges.subscribe(value => this.setNotification(value));
 
         const emailControl = this.customerForm.get('emailGroup.email');
-        emailControl.valueChanges.debounceTime(1000).subscribe(value => this.setMessage(emailControl));
+        emailControl.valueChanges.debounceTime(1000).subscribe(value => this.setErrorMessage(emailControl));
     }
 
     addAddress(): void {
@@ -148,10 +146,10 @@ export class CustomerComponent implements OnInit {
         console.log('Saved: ' + JSON.stringify(this.customerForm.value));
     }
 
-    setMessage(c: AbstractControl): void {
-        this.emailMessage = '';
+    setErrorMessage(c: AbstractControl): void {
+        this.emailErrorMessage = '';
         if ((c.touched || c.dirty) && c.errors) {
-            this.emailMessage = Object.keys(c.errors).map(key =>
+            this.emailErrorMessage = Object.keys(c.errors).map(key =>
                 this.validationMessages[key]).join(' ');
         }
     }

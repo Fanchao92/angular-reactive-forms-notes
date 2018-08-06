@@ -32,10 +32,10 @@
                                                          customerForm.get('firstName').errors">
                             <!-- NOTE: To get the validation errors of an FormControl element, refer to "errors" member variable 
                                 This errors array is the returned key-value pairs of validators-->
-                            <span *ngIf="customerForm.get('firstName').errors.required">
+                            <span *ngIf="customerForm.get('firstName').errors?.required">
                                 Please enter your first name.
                             </span>
-                            <span *ngIf="customerForm.get('firstName').errors.minlength">
+                            <span *ngIf="customerForm.get('firstName').errors?.minlength">
                                 The first name must be longer than 3 characters.
                             </span>
                         </span>
@@ -53,7 +53,7 @@
                                type="text" 
                                placeholder="Last Name (required)" 
                                formControlName="lastName" />
-                        <span class="help-block" *ngIf="(customerForm.get('lastName').touched || customerForm.get('lastName').dirty) && customerForm.get('lastName').errors">
+                        <span class="help-block" *ngIf="(customerForm.get('lastName').touched || customerForm.get('lastName').dirty) && customerForm.get('lastName').invalid">
                             <span *ngIf="customerForm.get('lastName').errors.required">
                                 Please enter your last name.
                             </span>
@@ -65,7 +65,7 @@
                 </div>
 
                 <div formGroupName="emailGroup"
-                     [ngClass]="{'has-error': customerForm.get('emailGroup').errors }">
+                     [ngClass]="{'has-error': customerForm.get('emailGroup').errors}">
                      
                     <!-- NOTE:
                      There are 2 ways to access the "email" or "confirmEmail" FormControls
@@ -73,7 +73,7 @@
                      Method 2: customerForm.get('emailGroup.confirmEmail')
                      -->
                     <div class="form-group"
-                         [ngClass]="{'has-error': emailMessage}">
+                         [ngClass]="{'has-error': emailErrorMessage}">
                         <label class="col-md-2 control-label" 
                             for="emailId">Email</label>
 
@@ -83,8 +83,8 @@
                                 type="email" 
                                 placeholder="Email (required)" 
                                 formControlName = "email" />
-                            <span class="help-block" *ngIf="emailMessage">
-                                {{ emailMessage }}
+                            <span class="help-block" *ngIf="emailErrorMessage">
+                                {{ emailErrorMessage }}
                             </span>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                                 placeholder="Confirm Email (required)" 
                                 formControlName = "confirmEmail" />
                             <span class="help-block" *ngIf="(customerForm.get('emailGroup.confirmEmail').touched || 
-                                                            customerForm.get('emailGroup.confirmEmail').dirty) && 
+                                                             customerForm.get('emailGroup.confirmEmail').dirty) && 
                                                             (customerForm.get('emailGroup.confirmEmail').errors ||
                                                              customerForm.get('emailGroup').errors)">
                                 <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors?.required">
@@ -127,7 +127,7 @@
                                id="phoneId" 
                                type="tel" 
                                placeholder="Phone" 
-                               formControlName = "phone" />
+                               formControlName="phone" />
                         <span class="help-block" *ngIf="customerForm.get('phone').errors">
                             <span *ngIf="customerForm.get('phone').errors.required">
                                 Please enter your phone number.
@@ -166,7 +166,7 @@
                                formControlName = "rating" />
                         <span class="help-block" *ngIf="(customerForm.get('rating').touched 
                                                          || customerForm.get('rating').dirty) && 
-                                                         customerForm.get('rating').errors">
+                                                         customerForm.get('rating').invalid">
                              <span *ngIf="customerForm.get('rating').errors.range">
                                 Please rate your experience from 1 to 5.
                             </span>
